@@ -1,0 +1,111 @@
+Grid {
+    layout: grid;
+    grid-size: 5 3;
+}
+
+#DirTree {
+    column-span: 1;
+    row-span: 3;
+    border-right: double $accent;
+}
+
+#FilesTab {
+    column-span: 4;
+    row-span: 2;
+}
+
+#OutputMenu {
+    column-span: 4;
+    row-span: 1;
+    border-top: double $accent;
+}
+
+#OutputMenu Label {
+    border-bottom: double $accent;
+}
+
+
+
+
+
+InfoWindow {
+    align: center middle;
+}
+
+#info_msg_dialog {
+    grid-size: 2;
+    grid-gutter: 2;
+    width: 70;
+    height: 10;
+    background: $surface;
+}
+
+#msg_info {
+    width: 100%;
+    height: 100%;
+    column-span: 2;
+    content-align: center bottom;
+}
+
+#btn_confirm {
+    width: 100%;
+}
+
+
+
+
+
+OpenFolder {
+    align: center middle;
+}
+
+#folder_path_dialog {
+    grid-size: 2;
+    grid-gutter: 1 2;
+    width: 70;
+    height: 10;
+    background: $surface;
+}
+
+#input_path_folder {
+    column-span: 2;
+    content-align: center middle;
+}
+
+#input_path_module {
+    column-span: 2;
+    content-align: center middle;
+}
+
+#folder_path_dialog Button {
+    width: 100%;
+}
+
+
+
+AddModule {
+    align: center middle;
+}
+
+
+
+MainMenu {
+    align: center middle;
+}
+
+#main_menu_dialog {
+    width: 30;
+    height: auto;
+    background: $surface;
+}
+
+#main_menu_dialog > Center > Button {
+    width: 90%;
+    margin-top: 1;
+}
+
+#main_menu_dialog #btn_close_main_menu {
+    width: auto;
+    margin-top: 1;
+    margin-bottom: 1;
+}

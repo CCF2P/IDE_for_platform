@@ -1,0 +1,39 @@
+#dict_wnd {
+    layout: grid;
+    grid-size: 5 8;
+}
+
+#dict_list_view {
+    column-span: 1;
+    row-span: 8;
+    border-right: double $accent;
+    height: 100%;
+}
+
+#DICTIONARIES {
+    width: 100%;
+    border-bottom: double $accent;
+}
+
+#dict_content_table {
+    column-span: 4;
+    row-span: 7;
+}
+
+DataTable {
+    background: $panel;
+}
+
+#option_dict_menu {
+    column-span: 4;
+    row-span: 1;
+    border-top: double $accent;
+}
+
+#panel_dict_button > Button {
+    margin-left: 2;
+}
+
+Log {
+    height: 50%;
+}

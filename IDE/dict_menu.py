@@ -3,7 +3,7 @@ import os.path
 import subprocess
 import csv
 
-from textual.app import App, ComposeResult, on
+from textual.app import ComposeResult, on
 from textual.binding import Binding
 from textual.screen import Screen, ModalScreen
 from textual.containers import (
@@ -12,17 +12,10 @@ from textual.containers import (
     Horizontal
 )
 from textual.widgets import (
-    Header,
     Footer,
     Button,
     Label,
-    DirectoryTree,
-    TextArea,
-    Static,
     Log,
-    Input,
-    TabbedContent,
-    TabPane,
     ListView,
     ListItem,
     DataTable
@@ -39,6 +32,9 @@ class DictList(Screen):
 
     def __init__(self, core_controller) -> None:
         super().__init__()
+        self.start = 0  # Begin of dictionary page
+        self.index = 0  # Index of current row on page
+        self.end = 0    # End of dictionary page
         self.core_controller = core_controller
         self.DICT_LIST = self.core_controller.get_dictionaries()
 
@@ -57,7 +53,7 @@ class DictList(Screen):
             yield DataTable(id="dict_content_table")
 
             with Container(id="option_dict_menu"):
-                with Horizontal(id="panel_dict_button"):
+                """with Horizontal(id="panel_dict_button"):
                     yield Button(
                         label="Start",
                         id="btn_to_start_dict"
@@ -73,13 +69,14 @@ class DictList(Screen):
                     yield Button(
                         label="End",
                         id="btn_to_end_dict"
-                    )
+                    )"""
                 yield Log(highlight=True)
     
     def action_exit(self) -> None:
         self.app.pop_screen()
 
-    def _load_dict_to_datatable(self, file_name: str) -> None:
+    # This function loads the dictionary page
+    def _load_dict_to_datatable(self, file_name: str, ) -> None:
         with open(
             file=f"./Core/Databases/DB_Dictionaries/{file_name}",
             mode="r",
@@ -95,17 +92,17 @@ class DictList(Screen):
             datatable.clear(columns=True)
 
             flag = True
-            number = 1
+            self.index = 0
             for row in spamreader:
-                if number == 1001:
-                    break
+                #if self. index == self.end:
+                #    break
                 if flag:
                     count_columns = len(row)
                     for i in range(count_columns):
                         datatable.add_column(" ")
                     flag = False
-                datatable.add_row(*row, label=number)
-                number += 1
+                datatable.add_row(*row, label=self.index)
+                self.index += 1
 
     @on(message_type=ListView.Selected, selector="#list_of_dict")
     def list_of_dict_select(self, event: ListView.Selected) -> None:
@@ -124,6 +121,11 @@ class DictList(Screen):
             log.write_line("btn_next_page_dict")
         elif event.button.id == "btn_to_end_dict":
             log.write_line("btn_to_end_dict")
+
+    def _get_dict_page_range(self, btn_id: str) -> None:
+        if btn_id == "start":
+            self.start = 0
+            self.index = 0
 
     def on_mount(self) -> None:
         dict_list: ListView = self.query_one("#list_of_dict")

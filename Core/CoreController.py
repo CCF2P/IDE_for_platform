@@ -2,7 +2,7 @@ import sys
 import subprocess
 
 from Core.Databases.DatabaseController import DatabaseController
-from Core.TuzovAnalyzer.main import main
+from Core.Databases.DB_Modules.TuzovAnalyzer.main import main
 
 
 class CoreController():

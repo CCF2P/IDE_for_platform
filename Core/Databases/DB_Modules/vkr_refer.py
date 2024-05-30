@@ -1,6 +1,6 @@
 
 from TuzovAnalyzer.main import TuzovAnalyzer
-from testdir_.main import main
+from vkr_refer_.main import main
 def start():
     with open(
         file="C:/Users/zhora/Desktop/Python/VKR_Platform/Core/output.txt",

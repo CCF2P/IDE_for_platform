@@ -1,7 +1,7 @@
 import os
 import re
 
-from Core.TuzovAnalyzer.addons import InfoProvider
+from .addons import InfoProvider
 from natasha import (
     Segmenter,
     MorphVocab,

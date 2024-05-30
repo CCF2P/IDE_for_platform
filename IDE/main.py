@@ -33,6 +33,9 @@ from textual.widgets import (
 from IDE.dict_menu import DictList
 
 
+_PATH_TO_INPUT_FILE: str = "C:/Users/zhora/Desktop/Python/VKR_Platform/Core/TuzovAnalyzer/input.txt"
+
+
 class AddModule(ModalScreen):
     def __init__(self) -> None:
         super().__init__()
@@ -83,8 +86,16 @@ class AddModule(ModalScreen):
                         shutil.copytree(
                             src=path,
                             dst="C:/Users/zhora/Desktop/Python/VKR_Platform/Core/Databases/DB_Modules/" + module_name + "_",
-                            dirs_exist_ok=True
+                            dirs_exist_ok=True,
+                            ignore=shutil.ignore_patterns("venv", ".venv")
                         )
+
+                        # if exist folder ".venv" or "venv", we need to remove it
+                        #if os.path.isdir("C:/Users/zhora/Desktop/Python/VKR_Platform/Core/Databases/DB_Modules/" + module_name + "_" + "/venv"):
+                        #    os.remove("C:/Users/zhora/Desktop/Python/VKR_Platform/Core/Databases/DB_Modules/" + module_name + "_" + "/venv")
+                        #elif os.path.isdir("C:/Users/zhora/Desktop/Python/VKR_Platform/Core/Databases/DB_Modules/" + module_name + "_" + "/.venv"):
+                        #    os.remove.isdir("C:/Users/zhora/Desktop/Python/VKR_Platform/Core/Databases/DB_Modules/" + module_name + "_" + "/.venv")
+
                         # create init script for new module, that we will see in list of modules in user mode
                         with open(
                             file="C:/Users/zhora/Desktop/Python/VKR_Platform/Core/Databases/DB_Modules/" +
@@ -92,14 +103,20 @@ class AddModule(ModalScreen):
                             ".py",
                             mode="w"
                         ) as init_script:
-                            init_script.write(f"""from {module_name}_.main import main
+                            init_script.write(f"""
+from TuzovAnalyzer.main import TuzovAnalyzer
+from {module_name}_.main import main
 def start():
     with open(
         file="C:/Users/zhora/Desktop/Python/VKR_Platform/Core/output.txt",
         mode="w"
     ) as output:
-        output.write(main())
-
+        res = main(tanalyzer=TuzovAnalyzer())
+        if isinstance(res, list):
+            for i in res:
+                output.write(i)
+        elif isinstance(res, str):
+            output.write(res)
 start()
                             """)
                     except FileExistsError as e:
@@ -301,6 +318,7 @@ class MainWindow(App):
     def action_consloe_input(self) -> None:
         log: Log = self.query_one(Log)
         input: Input = self.query_one("#ConsoleInput")
+        dt: DirectoryTree = self.query_one(DirectoryTree)
         
         cmd = input.value.split(sep=" ")
         if cmd[0] == "cls":
@@ -315,6 +333,8 @@ class MainWindow(App):
             except Exception as e:
                 log.write_line(e.__str__())
         input.clear()
+        dt.reload()
+
 
     def on_directory_tree_file_selected(self, message: DirectoryTree.FileSelected) -> None:
         log = self.query_one(Log)

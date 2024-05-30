@@ -1,7 +1,7 @@
 import csv
 
-from Core.TuzovAnalyzer.addons import InfoProvider
-from Core.TuzovAnalyzer.analyzer import Text, Expression, Sentence
+from .addons import InfoProvider
+from .analyzer import Text, Expression, Sentence
 
 
 class Dictionary:
@@ -42,7 +42,7 @@ def basic_tagger(value: float) -> str:
 def load_dict(tagger_func: 'function'=basic_tagger) -> Dictionary:
     dict = {}
     
-    dict_file = open(".\Core\TuzovAnalyzer\dict.csv", "r", encoding="utf-8")
+    dict_file = open(".\\Core\\Databases\\DB_Modules\\TuzovAnalyzer\\dict.csv", "r", encoding="utf-8")
     reader = csv.reader(dict_file, delimiter=";", dialect="unix")
     for row in reader:
         dict[row[0]] = float(row[2])

@@ -95,10 +95,11 @@ class myWindow(QtWidgets.QWidget):
         self.ui.outputField.setText(user_text)
 
     def processText(self) -> None:
+        self.ui.outputField.clear()
         input_text = self.ui.inputField.toPlainText()
         
         with open(
-            file="C:/Users/zhora/Desktop/Python/VKR_Platform/Core/TuzovAnalyzer/input.txt",
+            file="C:\\Users\\zhora\\Desktop\\Python\\VKR_Platform\\Core\\Databases\\DB_Modules\\TuzovAnalyzer\\input.txt",
             mode="w",
             encoding="utf8"
         ) as file:

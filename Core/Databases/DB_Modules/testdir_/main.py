@@ -1,2 +1,2 @@
-def main():
-	return "module is working"
+def main(tanalyzer):
+	return tanalyzer._test()

@@ -1,7 +1,9 @@
 import sys
 
 from PyQt5 import QtWidgets, QtCore
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QPushButton
+from PyQt5.QtGui import QPalette, QColor
 
 from IDE.main import run_ide
 from User.main import myWindow
@@ -26,6 +28,7 @@ class MainWindow(QtWidgets.QMainWindow):
     
     def setup_ui(self):
         self.setObjectName("MainWindow")
+        self.setWindowTitle("Mode")
         self.resize(400, 200)
         self.setMinimumSize(QtCore.QSize(400, 200))
         self.setMaximumSize(QtCore.QSize(400, 200))
@@ -39,6 +42,13 @@ class MainWindow(QtWidgets.QMainWindow):
         
         self.btn_user = QPushButton("User mode", self.centralwidget)
         self.btn_user.setGeometry(QtCore.QRect(120, 100, 180, 60))
+
+        self.setNormTheme()
+
+    def setNormTheme(self) -> None:
+        self.setStyleSheet("background: #f9f6f2;")
+        self.btn_developer.setStyleSheet("background: #e1dbd6;")
+        self.btn_user.setStyleSheet("background: #e1dbd6;")
 
     #def closeEvent(self, a0: QCloseEvent) -> None:
     #    if self.mode == "user":

@@ -335,7 +335,6 @@ class MainWindow(App):
         input.clear()
         dt.reload()
 
-
     def on_directory_tree_file_selected(self, message: DirectoryTree.FileSelected) -> None:
         log = self.query_one(Log)
         #log.write("path - " + message.path.__str__())
@@ -365,11 +364,18 @@ class MainWindow(App):
             for j in i.children:
                 if j.id == fn + ft:
                     return
+                
+        # Проверка того, что id файла не начинается с цифры
+        if re.fullmatch(r"[0-9]+.*", fn + ft):
+            return
 
+        # Устанавливаем подсветку синтакси
+        # В зависимости от расширения файла
         if ft == "py":
             lng = "python"
         else:
             lng = None
+
         #log.write(ft)
         ntab_pane = TabPane(title=file_name, id=f"{fn + ft}")
         #log.write_line("create tab")
@@ -382,7 +388,6 @@ class MainWindow(App):
             )
         )
         #log.write_line("fill tab")
-
         tabcnt = self.query_one("#FilesTab")
         tabcnt.add_pane(ntab_pane)
 

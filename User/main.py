@@ -64,7 +64,8 @@ class myWindow(QtWidgets.QWidget):
         dialog = QFileDialog(self)
         # dialog.setDirectory(r'C:')
         dialog.setFileMode(QFileDialog.FileMode.ExistingFiles)
-        # dialog.setNameFilter("Images (*.png *.jpg)")
+        # Устанавливаем фильтр только для txt файлов
+        dialog.setNameFilter("Text files (*.txt)")
         dialog.setViewMode(QFileDialog.ViewMode.List)
         if dialog.exec():
             filenames = dialog.selectedFiles()
@@ -81,22 +82,26 @@ class myWindow(QtWidgets.QWidget):
 
     def exportFile(self):
         filename, _ = QFileDialog.getSaveFileName(
-            None,
-            "Save File",
-            ".",
-            "Text Files (*.txt);;All Files (*)"
+            parent=None,
+            caption="Save File",
+            directory=".",
+            filter="Text files (*.txt)"
         )
         if filename:
             with open(filename, 'w', encoding="utf-8") as file:
                 file.write(self.ui.outputField.toPlainText())
 
-    def sum_text(self, user_text: str) -> None:
-        print("OK")
-        self.ui.outputField.setText(user_text)
-
     def processText(self) -> None:
         self.ui.outputField.clear()
         input_text = self.ui.inputField.toPlainText()
+
+        if input_text == "":
+            QtWidgets.QMessageBox.warning(
+                self,
+                "Внимание",
+                "Заполните текстовое поле"
+            )
+            return
         
         with open(
             file="C:\\Users\\zhora\\Desktop\\Python\\VKR_Platform\\Core\\Databases\\DB_Modules\\TuzovAnalyzer\\input.txt",
@@ -105,14 +110,16 @@ class myWindow(QtWidgets.QWidget):
         ) as file:
             file.write(input_text)
         
-        # Пока что возвращаю просто текст, а не результат работы модуля
         self.core_controller.run_module(self.ui.functionsList.currentText())
         with open(
             file="C:/Users/zhora/Desktop/Python/VKR_Platform/Core/output.txt",
             mode="r"
         ) as file:
             text = file.read()
-            self.ui.outputField.setText(text)
+            if text == "":
+                self.ui.outputField.setText("В введенном тексте допущены грамматические ошибки")
+            else:
+                self.ui.outputField.setText(text)
 
 
 def run_user(core_controller):

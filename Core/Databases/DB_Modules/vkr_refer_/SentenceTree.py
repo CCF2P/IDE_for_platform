@@ -16,7 +16,6 @@ class SentenceTreeNode:
 class SentenceTree:
     def __init__(self, tanalyzer) -> None:
         self.root = SentenceTreeNode(True)
-        #self.class_expression = tanalyzer.get_class_expression()
 
     @staticmethod
     def get_part_of_speech(node: SentenceTreeNode) -> list[str]:
@@ -157,9 +156,16 @@ class SentenceTree:
                 sentence.append(cur_node.word)
 
             # существительное -> предлог
-            """if self.get_part_of_speech(cur_node) == ["Предлог"]:
+            if self.get_part_of_speech(cur_node) == ["Предлог"]:
                 i = sentence.index(parent.word)
-                sentence.insert(i + 1, cur_node.word)"""
+                sentence.insert(i + 1, cur_node.word)
+
+            if self.get_part_of_speech(cur_node) == ["Прил"]:
+                i = sentence.index(parent.word)
+                if i == 0:
+                    sentence.insert(0, cur_node.word)
+                else:
+                    sentence.insert(i, cur_node.word)
 
         # проверка на прил -> прил/сущв
         if self.get_part_of_speech(parent) == ["Прил"]:

@@ -98,8 +98,8 @@ class myWindow(QtWidgets.QWidget):
         if input_text == "":
             QtWidgets.QMessageBox.warning(
                 self,
-                "Внимание",
-                "Заполните текстовое поле"
+                "Warning",
+                "Fill input text field"
             )
             return
         
@@ -117,7 +117,7 @@ class myWindow(QtWidgets.QWidget):
         ) as file:
             text = file.read()
             if text == "":
-                self.ui.outputField.setText("В введенном тексте допущены грамматические ошибки")
+                self.ui.outputField.setText("The entered text contains grammatical errors")
             else:
                 self.ui.outputField.setText(text)
 

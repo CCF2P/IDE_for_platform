@@ -115,7 +115,7 @@ class Ui_MainWindow(object):
         self.clearOutputFieldBtn.setStyleSheet("background: #e1dbd6;")
         self.processTextBtn.setStyleSheet("background: #e1dbd6;")
 
-        self.functionsList.setStyleSheet("background: #e1dbd6;")
+        self.functionsList.setStyleSheet('background: lightgray;' 'color: black;')
 
         self.textEdit.setStyleSheet("background: #fefefe;")
         self.textEdit_2.setStyleSheet("background: #fefefe;")
